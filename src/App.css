@@ -93,7 +93,25 @@ body {
 /* Contenedor centrado y más estrecho en móvil */
 @media (max-width: 480px) {
   #root {
-    max-width: 420px;
+    max-width: 460px;
     padding: 1rem;
+  }
+}
+
+.hero-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+/* SOLO iPhone / móvil */
+@media (max-width: 480px) {
+  .hero-img {
+    max-width: 380px;
+    /* prueba 320–420 */
+    max-height: 45vh;
+    /* que no ocupe toda la pantalla */
+    object-fit: contain;
   }
 }
