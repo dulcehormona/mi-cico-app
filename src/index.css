@@ -183,3 +183,44 @@ button[style*="background:transparent"] {
     font-size: 17px;
   }
 }
+
+/* ===== AJUSTE REAL DE LETRAS PARA IPHONE ===== */
+@media (max-width: 480px) {
+
+  /* Texto general dentro de la app */
+  .container,
+  .card,
+  .app-overlay {
+    font-size: 19px;
+    line-height: 1.6;
+  }
+
+  /* Títulos de secciones */
+  .card h2,
+  .card h3,
+  h2,
+  h3 {
+    font-size: 21px;
+    font-weight: 600;
+  }
+
+  /* Textos normales */
+  .card p,
+  .card span,
+  .card label {
+    font-size: 18px;
+  }
+
+  /* Inputs y selects (muy importante en móvil) */
+  input,
+  select,
+  button {
+    font-size: 18px;
+    padding: 10px 12px;
+  }
+
+  /* Botones */
+  button {
+    font-weight: 600;
+  }
+}
