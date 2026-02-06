@@ -144,3 +144,42 @@ button[style*="background:transparent"] {
   color: #ffffff !important;
   border: 0 !important;
 }
+
+/* === Texto más grande SOLO en móvil (iPhone) === */
+@media (max-width: 480px) {
+
+  /* Tamaño base de toda la app */
+  body {
+    font-size: 18px;
+    line-height: 1.55;
+  }
+
+  /* Títulos */
+  h1 {
+    font-size: 26px;
+  }
+
+  h2 {
+    font-size: 22px;
+  }
+
+  h3 {
+    font-size: 20px;
+  }
+
+  /* Textos normales */
+  p,
+  label,
+  span,
+  li,
+  small {
+    font-size: 18px;
+  }
+
+  /* Formularios (input, select, botones) */
+  input,
+  select,
+  button {
+    font-size: 17px;
+  }
+}
