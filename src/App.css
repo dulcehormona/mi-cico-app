@@ -150,3 +150,41 @@ body {
     font-size: 16px;
   }
 }
+
+/* ===== HACER MÁS GRANDE TODO EL BLOQUE CENTRAL EN IPHONE ===== */
+@media (max-width: 480px) {
+
+  /* Agranda todo el contenido dentro de la app */
+  .app-overlay {
+    transform: scale(1.18);
+    transform-origin: top center;
+  }
+
+  /* Evita que se corte por el scale */
+  .container {
+    max-width: 100% !important;
+    padding: 14px !important;
+  }
+
+  /* Inputs y botones más cómodos */
+  input,
+  select,
+  button {
+    font-size: 18px !important;
+    padding: 10px 12px !important;
+  }
+
+  /* Texto general más legible */
+  .card,
+  .card * {
+    font-size: 18px !important;
+    line-height: 1.6 !important;
+  }
+
+  /* Títulos más grandes */
+  h1,
+  h2,
+  h3 {
+    font-size: 22px !important;
+  }
+}
