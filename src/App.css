@@ -115,3 +115,38 @@ body {
     object-fit: contain;
   }
 }
+
+/* === AJUSTES DE TEXTO SOLO PARA MÓVIL (iPhone) === */
+@media (max-width: 480px) {
+
+  body {
+    font-size: 17px;
+    /* texto base más grande */
+    line-height: 1.5;
+  }
+
+  h1 {
+    font-size: 26px;
+  }
+
+  h2 {
+    font-size: 22px;
+  }
+
+  h3 {
+    font-size: 19px;
+  }
+
+  p,
+  label,
+  span,
+  li {
+    font-size: 17px;
+  }
+
+  input,
+  select,
+  button {
+    font-size: 16px;
+  }
+}
