@@ -261,64 +261,37 @@ body {
 ========================= */
 @media (max-width: 520px) {
 
-  /* A) MOSTRA "Dulce Hormona" COMPLETO:
-     - contain = non taglia mai l'immagine
-     - position top = mantiene la scritta in alto visibile
-  */
   .app-bg {
-    background-size: contain !important;
-    background-position: center top !important;
-    background-repeat: no-repeat !important;
+    min-height: 100vh;
+    background-size: contain;
+    background-position: center top;
+    background-repeat: no-repeat;
   }
 
-  /* B) Spinge i riquadri più in basso
-     così non coprono la scritta "Dulce Hormona"
-  */
   .app-overlay {
-    padding-top: 52vh !important;
-    /* aumenta/diminuisci se serve */
+    padding-top: 30vh;
+    /* antes estaba demasiado alto */
   }
 
-  /* C) Testo più grande e leggibile nei riquadri */
-  .card,
+  h1 {
+    font-size: 28px;
+    text-align: center;
+  }
+
+  h2 {
+    font-size: 20px;
+  }
+
   p,
   label,
-  li {
-    font-size: 17px !important;
-  }
-
-  /* D) Titoletti delle sezioni (h2/h3) più grandi */
-  h2 {
-    font-size: 20px !important;
-  }
-
-  h3 {
-    font-size: 18px !important;
-  }
-
-  /* E) Input e bottoni comodi su iPhone */
   input,
-  select {
-    font-size: 16px !important;
-    padding: 14px !important;
-    border-radius: 12px !important;
-  }
-
   button {
-    font-size: 16px !important;
-    padding: 14px 18px !important;
-    border-radius: 16px !important;
+    font-size: 16px;
   }
 
-  /* F) Riquadri un po’ più “chiari” (stesso stile, più leggibile) */
   .card {
-    background: rgba(255, 255, 255, 0.90) !important;
-    padding: 18px !important;
-    border-radius: 18px !important;
-  }
-
-  /* G) Se hai due colonne, su mobile diventa 1 colonna */
-  .twoCols {
-    grid-template-columns: 1fr !important;
+    margin: 12px;
+    padding: 16px;
+    background: rgba(255, 255, 255, 0.9);
   }
 }
