@@ -144,12 +144,11 @@ export default function App() {
   return (
     <div className="app-bg">
       <div className="app-overlay">
-        <div style={{ maxWidth: 720, margin: "0 auto", padding: 18, fontFamily: "system-ui" }}>
+        <div style={appShell}>
           <h1
             style={{
               marginBottom: 6,
               fontFamily: "'Pacifico', cursive",
-              fontSize: 36,
               color: "#1f3a5f",
               letterSpacing: "1px",
             }}
@@ -250,7 +249,7 @@ export default function App() {
           {!info ? (
             <p style={pStyle}>Primero introduzca la fecha de inicio del periodo.</p>
           ) : (
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+            <div className="twoCols" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
               <div>
                 <h3 style={h3Style}>Preferir</h3>
                 {foodsForPhase.preferir.length === 0 ? (
@@ -345,55 +344,6 @@ export default function App() {
 }
 
 /** Estilos */
-const cardStyle = {
-  border: "1px solid rgba(0,0,0,0.08)",
-  borderRadius: 14,
-  padding: 14,
-  background: "rgba(255,255,255,0.85)",
-  backdropFilter: "blur(4px)",
-  boxShadow: "0 6px 18px rgba(0,0,0,0.05)",
-  textAlign: "center",
-};
-
-const h2Style = {
-  margin: "0 0 8px 0",
-  fontSize: 22,
-  fontFamily: "'Pacifico', cursive",
-  color: "#1f3a5f",
-};
-
-const h3Style = {
-  margin: "10px 0 6px 0",
-  fontSize: 18,
-  fontFamily: "'Pacifico', cursive",
-  color: "#1f3a5f",
-};
-
-const pStyle = { margin: "6px 0" };
-const labelStyle = { display: "flex", flexDirection: "column", gap: 6, fontSize: 14 };
-const inputStyle = { padding: 10, borderRadius: 10, border: "1px solid rgba(0,0,0,0.15)" };
-const ulStyle = { margin: 0, paddingLeft: 18 };
-const liStyle = { marginBottom: 6 };
-
-const btnPrimary = {
-  padding: "10px 14px",
-  borderRadius: 12,
-  border: 0,
-  background: "#CFA7A2",
-  color: "#fff",
-  fontWeight: 700,
-  cursor: "pointer",
-};
-
-const btnSecondary = {
-  padding: "10px 14px",
-  borderRadius: 12,
-  border: "1px solid rgba(0,0,0,0.12)",
-  background: "rgba(255,255,255,0.9)",
-  color: "#2F2A28",
-  fontWeight: 600,
-  cursor: "pointer",
-};
 
 
 
