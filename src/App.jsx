@@ -1,9 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
-// import { getAlertasPorDia } from "./sintomas";
-
+import { getAlertasPorDia } from "./sintomas";
 
 /** Configuración básica del ciclo */
-const DEFAULT_CYCLE_LENGTH = 30; // días
+const DEFAULT_CYCLE_LENGTH = 35; // días
 const PHASES = ["Menstrual", "Folicular", "Ovulatoria", "Lútea"];
 
 /** Rangos estándar por día del ciclo (ajustables) */
@@ -42,28 +41,48 @@ const LS_FOODS = "miCiclo_foods";
 
 const STARTER_FOODS = [
   // MENSTRUAL
-  { phase: "Menstrual", type: "Preferir", food: "Lentejas", note: "hierro / energía" },
-  { phase: "Menstrual", type: "Preferir", food: "Espinaca", note: "hierro / folatos" },
-  { phase: "Menstrual", type: "Preferir", food: "Salmón", note: "omega-3" },
-  { phase: "Menstrual", type: "Preferir", food: "Jengibre (infusión)", note: "antiinflamatorio" },
-  { phase: "Menstrual", type: "Limitar", food: "Alcohol", note: "inflamación" },
-  { phase: "Menstrual", type: "Limitar", food: "Azúcar alta", note: "picos / fatiga" },
+  { phase: "Menstrual", type: "Preferir", food: "Lentejas - Cereales Integrales", note: "Hierro" },
+  { phase: "Menstrual", type: "Preferir", food: "Fruta seca", note: "Acidos grasos - Reducen la inflamación" },
+  { phase: "Menstrual", type: "Preferir", food: "Cacao - Semillas", note: "Ricos en magnesio" },
+  { phase: "Menstrual", type: "Preferir", food: "Kiwi - Naranjas - Pimentones", note: "Ricos en Vit. C" },
+  { phase: "Menstrual", type: "Preferir", food: "Infusiones de Canela y Jengibre", note: "Ayudan a disminuir cólicos" },
+  { phase: "Menstrual", type: "Limitar", food: "Alcohol y exceso de cafeína" },
+  { phase: "Menstrual", type: "Limitar", food: "Carbohidratos simples - Azúcar" },
+  { phase: "Menstrual", type: "Limitar", food: "Carnes rojas en exceso" },
+  { phase: "Menstrual", type: "Limitar", food: "Ultraprocesados" },
+  { phase: "Menstrual", type: "Limitar", food: "Sal en exceso" },
+
+
 
   // FOLICULAR
-  { phase: "Folicular", type: "Preferir", food: "Brócoli", note: "soporte metabólico" },
-  { phase: "Folicular", type: "Preferir", food: "Avena", note: "energía sostenida" },
-  { phase: "Folicular", type: "Preferir", food: "Frutos rojos", note: "antioxidantes" },
+  { phase: "Folicular", type: "Preferir", food: "Verduras de hoja verde - Proteína de buena calidad", note: "Soporte metabólico" },
+  { phase: "Folicular", type: "Preferir", food: "Carbohidratos Complejos", note: "Energía sostenida" },
+  { phase: "Folicular", type: "Preferir", food: "Frutos rojos", note: "Antioxidantes" },
+  { phase: "Folicular", type: "Preferir", food: "Infusiones Manzanilla - Meslisa", note: "Favorecen Relajación" },
+  { phase: "Folicular", type: "Limitar", food: "Ultraprocesados" },
+  { phase: "Folicular", type: "Limitar", food: "Azúcares simples" },
+  { phase: "Folicular", type: "Limitar", food: "Harinas refinadas" },
+
 
   // OVULATORIA
-  { phase: "Ovulatoria", type: "Preferir", food: "Nueces", note: "grasas buenas" },
-  { phase: "Ovulatoria", type: "Preferir", food: "Semillas de lino o chía", note: "omega-3 / fibra" },
-  { phase: "Ovulatoria", type: "Preferir", food: "Vegetales variados", note: "antioxidantes" },
+  { phase: "Ovulatoria", type: "Preferir", food: "Verduras frescas - Crudas - Amargas", note: "Antioxidantes - Depuración metabólica" },
+  { phase: "Ovulatoria", type: "Preferir", food: "Grasas Buenas", note: "Favorecen la producción de hormonas" },
+  { phase: "Ovulatoria", type: "Preferir", food: "Semillas de Calabazas - Semillas de Sésamo - Legumbres", note: "Ricos en Zinc y Selenio" },
+  { phase: "Ovulatoria", type: "Preferir", food: "Frutos Rojos", note: "Antioxidantes - Favorecen Calidad Ovulatoria" },
+  { phase: "Ovulatoria", type: "Preferir", food: "Fibra Soluble", note: "Regulan Transito Intestinal" },
+  { phase: "Ovulatoria", type: "Preferir", food: "Infusión Menta", note: "Favorece función Hepática" },
+  { phase: "Ovulatoria", type: "Limitar", food: "Alcohol" },
+  { phase: "Ovulatoria", type: "Limitar", food: "Frituras - Exceso de grasas saturadas" },
+  { phase: "Ovulatoria", type: "Limitar", food: "Azúcares refinados" },
+
 
   // LÚTEA
-  { phase: "Lútea", type: "Preferir", food: "Quinoa", note: "saciedad / minerales" },
-  { phase: "Lútea", type: "Preferir", food: "Batata", note: "carbo complejo" },
-  { phase: "Lútea", type: "Preferir", food: "Cacao puro", note: "magnesio" },
-  { phase: "Lútea", type: "Limitar", food: "Ultraprocesados", note: "antojos / sal" },
+  { phase: "Lútea", type: "Preferir", food: "Legumbres variadas", note: "Ricos en Hierro y Folatos" },
+  { phase: "Lútea", type: "Preferir", food: "Cabohidratos Complejos de buena Calidad", note: "Energía Estable" },
+  { phase: "Lútea", type: "Preferir", food: "Alimentos Fermentados", note: "Correcta Metabolización Hormonal" },
+  { phase: "Lútea", type: "Preferir", food: "Infusion Toronjil", note: "Reguladora del Sistema ervioso" },
+  { phase: "Lútea", type: "Limitar", food: "Ultraprocesados - Sal en exceso - Azúcares simples " },
+
 ];
 
 export default function App() {
@@ -100,14 +119,13 @@ export default function App() {
   const alertas = useMemo(() => {
     if (!info) return [];
     try {
+      // Si getAlertasPorDia no existe, lanzará ReferenceError y será capturado aquí.
       return getAlertasPorDia(info.day, DEFAULT_CYCLE_LENGTH) || [];
     } catch (e) {
       console.error("Error en getAlertasPorDia:", e);
       return [];
     }
   }, [info]);
-
-
 
   const foodsForPhase = useMemo(() => {
     if (!info) return { preferir: [], limitar: [] };
@@ -141,6 +159,84 @@ export default function App() {
     // Los alimentos se mantienen (si quiere borrar también, lo agregamos luego)
   }
 
+  const appShell = {
+    width: "min(720px, 92vw)",
+    margin: "0 auto",
+    padding: "16px 12px",
+    textAlign: "center",
+  };
+
+  const cardStyle = {
+    background: "rgba(255,255,255,0.88)",
+    border: "1px solid rgba(0,0,0,0.08)",
+    borderRadius: 18,
+    padding: 16,
+    boxShadow: "0 8px 22px rgba(0,0,0,0.10)",
+    backdropFilter: "blur(6px)",
+  };
+
+  const h2Style = {
+    margin: "0 0 6px 0",
+    fontSize: "clamp(18px, 4.5vw, 22px)",
+    lineHeight: 1.15,
+  };
+
+  const pStyle = {
+    margin: "0 0 12px 0",
+    fontSize: "clamp(14px, 3.8vw, 16px)",
+    lineHeight: 1.35,
+    opacity: 0.85,
+  };
+
+
+
+  // ✅ ESTAS SON LAS VARIABLES QUE TE FALTABAN (SOLO ESTO ARREGLA LA PÁGINA EN BLANCO)
+  const labelStyle = {
+    display: "grid",
+    gap: 6,
+    textAlign: "center",
+    justifyItems: "center",
+    fontSize: 14,
+    lineHeight: 1.25,
+  };
+
+  const inputStyle = {
+    width: "100%",
+    padding: "10px 12px",
+    borderRadius: 14,
+    border: "1px solid rgba(0,0,0,0.12)",
+    background: "rgba(255,255,255,0.95)",
+    outline: "none",
+    fontSize: 16,
+  };
+
+  const btnPrimary = {
+    padding: "10px 14px",
+    borderRadius: 14,
+    border: "1px solid rgba(0,0,0,0.10)",
+    background: "#1f3a5f",
+    color: "white",
+    fontSize: 15,
+    cursor: "pointer",
+  };
+
+  const h3Style = {
+    margin: "0 0 8px 0",
+    fontSize: 16,
+    color: "#1f3a5f",
+    letterSpacing: "0.2px",
+  };
+
+  const ulStyle = {
+    margin: 0,
+    paddingLeft: 18,
+  };
+
+  const liStyle = {
+    marginBottom: 6,
+    lineHeight: 1.25,
+  };
+
   return (
     <div className="app-bg">
       <div className="app-overlay">
@@ -157,22 +253,19 @@ export default function App() {
           </h1>
 
           <p style={{ marginTop: 0, opacity: 0.75 }}>
-            Privado · Sin nube · Datos solo en este dispositivo
+            Privado
           </p>
         </div>
       </div>
 
-
-
-
       <div style={{ display: "grid", gap: 14, gridTemplateColumns: "1fr", marginTop: 16 }}>
         {/*  Fecha inicio */}
-        <section className="card" style={cardStyle}>
-          <h2 style={h2Style}> Fecha de inicio del periodo</h2>
-          <p style={pStyle}>Introduzca la fecha en la que le llegó el periodo (día 1 del ciclo).</p>
+        <section className="card">
+          <h2 className="h2">Fecha de inicio del Ciclo </h2>
+          <p style={pStyle}>Introduzca la fecha en la que le llegó la menstruazión (Día 1 del ciclo).</p>
 
           <label style={labelStyle}>
-            Fecha de inicio:
+            Fecha de inicio
             <input
               type="date"
               value={startDate}
@@ -184,14 +277,14 @@ export default function App() {
 
           <div style={{ display: "flex", gap: 10, marginTop: 10, flexWrap: "wrap" }}>
             <button onClick={clearAll} style={btnPrimary}>
-              Limpiar fecha
+              Calcular
             </button>
           </div>
         </section>
 
         {/*  Fase actual */}
         <section className="card" style={cardStyle}>
-          <h2 style={h2Style}> Su fase actual</h2>
+          <h2 style={h2Style}> ¿En qué fase del ciclo menstrual estoy actualmente?</h2>
 
           {!info ? (
             <p style={pStyle}>Ingrese una fecha de inicio para calcular su fase.</p>
@@ -201,13 +294,12 @@ export default function App() {
                 Hoy usted está en la fase: <b>{info.phase}</b>
               </p>
 
-              {/* ✅ IMPORTANTE: el <div> ya NO está dentro de <p> */}
               <p style={pStyle}>
-                Día del ciclo: <b>{info.day}</b> (estimado con ciclo de {DEFAULT_CYCLE_LENGTH} días)
+                Día del ciclo N.º <b>{info.day}</b> (Estimando un ciclo menstrual de {DEFAULT_CYCLE_LENGTH} días)
               </p>
 
               <div style={{ marginTop: 16 }}>
-                <h3 style={{ marginBottom: 8 }}>Alertas y consejos del día</h3>
+                <h3 style={{ marginBottom: 8 }}> Sugerencias para hoy </h3>
 
                 {alertas.length === 0 ? (
                   <p style={{ opacity: 0.7 }}>Hoy no se prevén molestias relevantes.</p>
@@ -218,8 +310,19 @@ export default function App() {
                         <b>{a.title}</b> <span style={{ opacity: 0.6 }}>({a.when})</span>
                       </p>
 
-                      <p style={{ marginBottom: 6 }}>
-                        <b>Posibles síntomas:</b> {a.symptoms.join(", ")}
+                      <h3
+                        style={{
+                          margin: "10px 0 6px 0",
+                          textAlign: "center",
+                          fontSize: 16,
+                          fontWeight: 700,
+                        }}
+                      >
+                        Posibles Molestias - Recomendaciones
+                      </h3>
+
+                      <p style={{ margin: "0 0 10px 0", textAlign: "center", opacity: 0.9 }}>
+                        {a.symptoms.join(", ")}
                       </p>
 
                       <ul style={{ paddingLeft: 18, margin: 0 }}>
@@ -231,10 +334,6 @@ export default function App() {
                   ))
                 )}
               </div>
-
-              <p style={{ ...pStyle, opacity: 0.7 }}>
-                Nota: este cálculo es orientativo. Luego podemos personalizar la duración de su ciclo y fases.
-              </p>
             </>
           )}
         </section>
@@ -243,7 +342,7 @@ export default function App() {
         <section className="card" style={cardStyle}>
           <h2 style={h2Style}> Alimentos recomendados según su fase</h2>
           <p style={{ fontStyle: "italic", opacity: 0.8, marginBottom: 12 }}>
-            Estos alimentos ayudan a mantener la energía, la saciedad y el equilibrio hormonal.
+            Estos alimentos ayudan a mantener la energía y el equilibrio hormonal.
           </p>
 
           {!info ? (
@@ -285,55 +384,6 @@ export default function App() {
           )}
         </section>
 
-        {/*  Base de datos editable */}
-        <section className="card" style={cardStyle}>
-          <h2 style={h2Style}> Su base privada de alimentos (editable)</h2>
-          <p style={pStyle}>Aquí usted añade o ajusta alimentos por fase. Quedan guardados solo en este dispositivo.</p>
-
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
-            <label style={labelStyle}>
-              Fase:
-              <select value={newPhase} onChange={(e) => setNewPhase(e.target.value)} style={inputStyle}>
-                {PHASES.map((p) => (
-                  <option key={p} value={p}>{p}</option>
-                ))}
-              </select>
-            </label>
-
-            <label style={labelStyle}>
-              Tipo:
-              <select value={newType} onChange={(e) => setNewType(e.target.value)} style={inputStyle}>
-                <option value="Preferir">Preferir</option>
-                <option value="Limitar">Limitar</option>
-              </select>
-            </label>
-
-            <label style={labelStyle}>
-              Alimento:
-              <input
-                value={newFood}
-                onChange={(e) => setNewFood(e.target.value)}
-                placeholder="Ej. sardinas, yogur, garbanzos..."
-                style={inputStyle}
-              />
-            </label>
-
-            <label style={labelStyle}>
-              Nota (opcional):
-              <input
-                value={newNote}
-                onChange={(e) => setNewNote(e.target.value)}
-                placeholder="Ej. magnesio / antiinflamatorio"
-                style={inputStyle}
-              />
-            </label>
-          </div>
-
-          <div style={{ display: "flex", gap: 10, marginTop: 10, flexWrap: "wrap" }}>
-            <button onClick={addFood} style={btnPrimary}>Añadir</button>
-            <button onClick={resetFoods} style={btnPrimary}>Restablecer lista inicial</button>
-          </div>
-        </section>
       </div>
 
       <footer style={{ marginTop: 18, opacity: 0.7, fontSize: 12 }}>
@@ -344,7 +394,3 @@ export default function App() {
 }
 
 /** Estilos */
-
-
-
-

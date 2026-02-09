@@ -295,3 +295,56 @@ body {
     background: rgba(255, 255, 255, 0.9);
   }
 }
+
+/* Contenedor principal (reemplaza appShell) */
+.app-shell {
+  width: min(560px, 92vw);
+  margin: 0 auto;
+}
+
+/* La tarjeta (tu .card) */
+.card {
+  width: 100%;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+/* Fondo: centrado para que “Dulce Hormona” se vea mejor */
+.app-bg {
+  background-position: center top;
+  /* clave */
+  background-size: cover;
+}
+
+/* SOLO MÓVIL */
+@media (max-width: 480px) {
+  :root {
+    font-size: 18px;
+  }
+
+  /* letras más grandes */
+  .card {
+    transform: scale(1.05);
+  }
+
+  /* un poquito más grande sin romper diseño */
+  .app-bg {
+    background-position: center 12%;
+  }
+
+  /* sube un poco para que se vea el texto del dibujo */
+}
+
+.h2 {
+  font-size: 1.15rem;
+  line-height: 1.25;
+  margin: 10px 0 6px;
+  font-weight: 600;
+}
+
+/* Solo móvil */
+@media (max-width: 480px) {
+  .h2 {
+    font-size: 1.35rem;
+  }
+}
