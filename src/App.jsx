@@ -277,7 +277,7 @@ export default function App() {
 
           <div style={{ display: "flex", gap: 10, marginTop: 10, flexWrap: "wrap" }}>
             <button onClick={clearAll} style={btnPrimary}>
-              Calcular
+              Eliminar Fecha
             </button>
           </div>
         </section>
